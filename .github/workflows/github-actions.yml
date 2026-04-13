@@ -52,9 +52,9 @@ jobs:
 
       - name: Deploy Bot
         env:
-          SERVER: ${{ secrets.SERVER }}
-          LOGIN: ${{ secrets.LOGIN }}
-          KEY: ${{ secrets.KEY }}
+          SERVER: ${{ SECRETS.SERVER }}
+          LOGIN: ${{ SECRETS.LOGIN }}
+          KEY: ${{ SECRETS.KEY }}
         run: |
           cicd-pipeline-utils/scripts/bot.sh deploy \
             -version "v1.2.0" \
@@ -70,5 +70,5 @@ jobs:
           KEY: ${{ secrets.KEY }}
         run: |
           cicd-pipeline-utils/scripts/bot.sh release \
-            -version "v1.2.0" \
+            -version "v1.0.0" \
             -botId "demo-hpe-bot"
