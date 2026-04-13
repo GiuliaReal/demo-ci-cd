@@ -1,3 +1,4 @@
 #!/bin/bash
 
-zip -r "bot.zip" * -x "bot.zip"
+mkdir -p build
+zip -r "build/bot.zip" * -x "build/*" -x "build.sh"
