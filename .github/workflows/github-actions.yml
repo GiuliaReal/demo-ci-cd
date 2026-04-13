@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build & Deploy to BotCity
     needs: lint_and_security
+    environment: SECRETS
 
     steps:
       - name: Checkout code
