@@ -18,7 +18,7 @@ def main():
 
     print(f"Task ID is: {execution.task_id}")  # noqa: T201
     print(f"Task Parameters are: {execution.parameters}")  # noqa: T201
-
+    print("starting...")
     maestro.alert(execution.task_id, "Example Bot started!", AlertType.INFO)
 
     # Here you can call your main.py file or implement your bot's logic
