@@ -71,5 +71,5 @@ jobs:
           KEY: ${{ secrets.KEY }}
         run: |
           cicd-pipeline-utils/scripts/bot.sh release \
-            -version "v1.0.0" \
+            -version "v1.0.1" \
             -botId "demo-hpe-bot"
