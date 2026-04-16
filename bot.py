@@ -5,6 +5,7 @@ from botcity.maestro import (  # noqa: E402
     AutomationTaskFinishStatus,
 )
 
+print("Hewy!!!!")
 # Disable errors if we are not connected to Maestro
 BotMaestroSDK.RAISE_NOT_CONNECTED = False
 
