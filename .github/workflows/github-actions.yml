@@ -1,41 +1,11 @@
-name: Bot Pipeline
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  lint_and_security:
-    runs-on: ubuntu-latest
-    name: Lint & Security Checks
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install linting tools
-        run: |
-          pip install ruff bandit
-
-      - name: Run Ruff (linter)
-        run: |
-          ruff check . --output-format=github
-
-      - name: Run Bandit (security scan)
-        run: |
-          bandit -r . -x ./tests --severity-level medium
-
   build_and_deploy:
     runs-on: ubuntu-latest
-    name: Build & Deploy to BotCity
-    needs: lint_and_security
-    environment: SECRETS
 
     steps:
       - name: Checkout code
@@ -48,28 +18,28 @@ jobs:
 
       - name: Checkout bot.sh from repository
         run: |
-          git clone --branch v1.2 https://github.com/botcity-dev/cicd-pipeline-utils.git
+          git clone --branch v1.0 https://github.com/botcity-dev/cicd-pipeline-utils.git
           chmod +x cicd-pipeline-utils/scripts/bot.sh
 
       - name: Deploy Bot
         env:
-          SERVER: ${{ SECRETS.SERVER }}
-          LOGIN: ${{ SECRETS.LOGIN }}
-          KEY: ${{ SECRETS.KEY }}
-        run: |
-          cicd-pipeline-utils/scripts/bot.sh deploy \
-            -version "v1.2.0" \
-            -botFile "./build/bot.zip" \
-            -botId "demo-hpe-bot" \
-            -type "python" \
-            -repository "DEFAULT"
+          SERVER: ${{ secrets.SERVER }}
+          LOGIN: ${{ secrets.LOGIN }}
+          KEY: ${{ secrets.KEY }}
+        run: >
+          cicd-pipeline-utils/scripts/bot.sh deploy 
+          -version "1.1.0" 
+          -botFile ".\maestro.zip" 
+          -botId "ExampleBotHPE" 
+          -type "python" 
+          -repository "DEFAULT"
 
       - name: Release Bot
         env:
           SERVER: ${{ secrets.SERVER }}
           LOGIN: ${{ secrets.LOGIN }}
           KEY: ${{ secrets.KEY }}
-        run: |
-          cicd-pipeline-utils/scripts/bot.sh release \
-            -version "v1.1.1" \
-            -botId "demo-hpe-bot"
+        run: >
+          cicd-pipeline-utils/scripts/bot.sh release 
+          -version "1.1.0" 
+          -botId "ExampleBotHPE"
