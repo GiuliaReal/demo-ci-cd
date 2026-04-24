@@ -1,24 +1,27 @@
+name: Deploy and Release automatizado
+
 on:
   push:
     branches:
       - main
 
 jobs:
-  check-code:
-    - name: Bandit
-      runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout the Repository
-          uses: actions/checkout@v4
+  check_code:
+    name: Bandit
+    runs-on: ubuntu-latest
 
-        - name: Set up Python 3.12
-          uses: actions/setup-python@v5
-          with:
-            python-version: "3.12"
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v4
 
-        - name: Run Bandit
-          run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/bandit/master/pipeline.sh)
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Bandit
+        run: bash <(curl -s https://raw.githubusercontent.com/CICDToolbox/bandit/master/pipeline.sh)
 
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -45,8 +48,8 @@ jobs:
         run: >
           cicd-pipeline-utils/scripts/bot.sh deploy 
           -version "1.1.0" 
-          -botFile ".\maestro.zip" 
-          -botId "ExampleBotHPE" 
+          -botFile "./BotYoutube.zip" 
+          -botId "BotYoutubeApr" 
           -type "python" 
           -repository "DEFAULT"
 
@@ -58,4 +61,4 @@ jobs:
         run: >
           cicd-pipeline-utils/scripts/bot.sh release 
           -version "1.1.0" 
-          -botId "ExampleBotHPE"
+          -botId "BotYoutubeApr"
